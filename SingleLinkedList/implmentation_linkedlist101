@@ -1,0 +1,170 @@
+#include <iostream>
+using namespace std;
+
+//node class to represent a node of the linked list
+class Node {
+    public :
+        int data;
+        Node *next;
+
+        //default constructor
+        Node(){
+            data = 0;
+            next = NULL;
+        
+        }
+
+        //parametrised constructor
+        Node (int data){
+            this->data = data;
+            this->next = NULL;
+        }
+};
+
+//linked list class to implment the lined list
+
+class Linkedlist{
+    Node *head;
+
+    public :
+        //default constructor
+        Linkedlist(){
+            head = NULL;
+        }
+        
+        //function to insert  a node at the end
+        void insertNode(int);
+        //function to print
+        void printlist();
+        //funtion to delete at any postition
+        void deletenode(int);
+
+};
+
+// Function to delete the 
+// node at given position 
+void Linkedlist::deletenode(int nodeOffset) 
+{ 
+    Node *temp1 = head, *temp2 = NULL; 
+    int ListLen = 0; //used to store the length of linked list 
+  
+    if (head == NULL) { 
+        cout << "List empty." << endl; 
+        return;
+    } 
+  
+    // Find length of the linked-list. 
+    while (temp1 != NULL) { 
+        temp1 = temp1->next; 
+        ListLen++; 
+    } 
+  
+    // Check if the position to be 
+    // deleted is greater than the length 
+    // of the linked list. 
+    if (ListLen < nodeOffset) { 
+        cout << "Index out of range"
+             << endl; 
+        return; 
+    } 
+  
+    // Declare temp1 
+    temp1 = head; 
+  
+    // Deleting the head. 
+    if (nodeOffset == 1) { 
+  
+        // Update head 
+        head = head->next; 
+        delete temp1; 
+        return; 
+    } 
+  
+    // Traverse the list to 
+    // find the node to be deleted. 
+    while (nodeOffset-- > 1) { 
+  
+        // Update temp2 
+        temp2 = temp1; 
+  
+        // Update temp1 
+        temp1 = temp1->next; 
+    } 
+  
+    // Change the next pointer 
+    // of the previous node. 
+    temp2->next = temp1->next; 
+  
+    // Delete the node 
+    delete temp1; 
+} 
+
+void Linkedlist::insertNode(int data){
+
+    //create the new Node
+    Node *newnode = new Node(data);
+
+    //assign to head
+    if (head == NULL){
+        head = newnode;
+        return;
+    }
+
+    //traverse till end of list
+    Node *temp = head;
+
+    while (temp->next != NULL){
+        temp = temp->next;
+
+    }
+
+     // Insert at the last. 
+    temp->next = newnode;
+
+}
+    void Linkedlist::printlist()
+ {
+        Node* temp = head;
+
+    
+
+    //check for empty list
+    if (head == NULL)
+    {
+        cout<<"list empty"<<endl;
+        return;
+    }
+    //traverse the list
+    while(temp != NULL){
+        cout<<temp->data<<" ";
+        temp = temp->next;
+    }
+
+}
+
+//Driver Code 
+
+int main() 
+{ 
+    Linkedlist list; 
+  
+    // Inserting nodes 
+    list.insertNode(1); 
+    list.insertNode(2); 
+    list.insertNode(3); 
+    list.insertNode(4); 
+  
+    cout << "Elements of the list are: "; 
+  
+    // Print the list 
+    list.printlist() ;
+    cout << endl; 
+  
+    // Delete node at position 2. 
+    list.deletenode(2); 
+  
+    cout << "Elements of the list are: "; 
+    list.printlist(); 
+    cout << endl; 
+    return 0; 
+}
